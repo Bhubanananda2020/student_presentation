@@ -1,0 +1,84 @@
+<mat-card class="shadow-lg rounded mb-4">
+  <div class="my-4 py-4">
+    <button class="btn btn-primary" (click)="createStudent()">
+      Create Student
+    </button>
+  </div>
+
+  <mat-card-content class="p-0 mt-4">
+    <div class="mat-card-table px-0">
+      <div class="spinner-container" *ngIf="isLoading">
+        <mat-spinner></mat-spinner>
+      </div>
+
+      <table
+        mat-table
+        class="table table-striped table-hover table-bordered mt-3"
+        #table
+        [dataSource]="students"
+      >
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let element" maxWidth="110">
+            {{ element.name }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="age">
+          <th mat-header-cell *matHeaderCellDef>Age</th>
+          <td mat-cell *matCellDef="let element" maxWidth="110">
+            {{ element.age }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="studentClass">
+          <th mat-header-cell *matHeaderCellDef>Class</th>
+          <td mat-cell *matCellDef="let element" maxWidth="150">
+            {{ element.studentClass }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="phone">
+          <th mat-header-cell *matHeaderCellDef>Phone number</th>
+          <td mat-cell *matCellDef="let element" maxWidth="110">
+            {{ element.phone }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef class="text-center">Actions</th>
+          <td
+            mat-cell
+            *matCellDef="let element; let i = index"
+            class="text-center"
+          >
+            <mat-icon
+              [matMenuTriggerFor]="navigationMenu"
+              id="actions-{{ i }}"
+              class="mat-icon-button"
+              aria-label="actions"
+            >
+              more_vert
+            </mat-icon>
+            <mat-menu #navigationMenu="matMenu">
+              <button mat-menu-item (click)="viewStudentDetails(element)">
+                <span>View student</span>
+              </button>
+              <button mat-menu-item (click)="deleteStudent(element)">
+                <span>Delete student</span>
+              </button>
+            </mat-menu>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          class="element-row"
+          tabindex="0"
+        ></tr>
+      </table>
+    </div>
+  </mat-card-content>
+</mat-card>
